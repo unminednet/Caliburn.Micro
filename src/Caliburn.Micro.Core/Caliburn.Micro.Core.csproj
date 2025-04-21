@@ -52,6 +52,7 @@
   <ItemGroup>
     <PackageReference Update="Microsoft.SourceLink.GitHub" Version="8.0.0" />
     <PackageReference Update="Nerdbank.GitVersioning" Version="3.7.112" />
+    <PackageReference Include="ReactiveUI" Version="20.2.45" />
   </ItemGroup>
 
 </Project>
