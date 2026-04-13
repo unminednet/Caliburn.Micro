@@ -30,6 +30,7 @@
     using EventTrigger = Avalonia.Xaml.Interactions.Core.EventTriggerBehavior;
     using FrameworkElement = Avalonia.Controls.Control;
     using Avalonia.Input;
+    using Avalonia.Controls.Primitives;
 #elif WinUI3
     using Microsoft.UI.Xaml;
     using Microsoft.UI.Xaml.Data;
@@ -214,7 +215,6 @@
                 if (View.ExecuteOnLoad(AssociatedObject, ElementLoaded))
                 {
 #if AVALONIA
-                    //string eventName = "AttachedToLogicalTree";
                     string eventName = "Loaded";
                     var trigger = Interaction.GetBehaviors(AssociatedObject)
                         .OfType<EventTrigger>()
@@ -416,7 +416,7 @@
 
             _context.EventArgs = eventArgs;
 
-            if (EnforceGuardsDuringInvocation && (_context?.CanExecute() != true))
+            if (EnforceGuardsDuringInvocation && _context.CanExecute != null && !_context.CanExecute())
             {
                 return;
             }
@@ -597,7 +597,30 @@
                     }
                 }
 
-                currentElement = BindingScope.GetVisualParent(currentElement);
+                //currentElement = BindingScope.GetVisualParent(currentElement);
+
+                //Modified parts Begin
+                var pElement = BindingScope.GetVisualParent(currentElement);
+                if (pElement == null
+                    && currentElement.GetType().Name.Equals("PopupRoot", StringComparison.OrdinalIgnoreCase))
+                {
+
+#if AVALONIA
+                    if (currentElement is PopupRoot popupRoot && popupRoot.Parent is Popup popup)
+                    {
+                        pElement = popup.PlacementTarget;
+                    }
+
+#elif !WINDOWS_UWP
+                    if (currentElement is FrameworkElement popupRoot && popupRoot.Parent is Popup popup)
+                    {
+                        pElement = popup.PlacementTarget;
+                    }
+#endif
+                }
+
+                currentElement = pElement;
+                //End
             }
 #if AVALONIA
             Log.Info("SetMethodBinding avalonia");

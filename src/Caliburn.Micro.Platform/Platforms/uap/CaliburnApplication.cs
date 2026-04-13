@@ -9,8 +9,8 @@ using Windows.ApplicationModel;
 #if WinUI3
 using Microsoft.UI.Xaml;
 
-    using Microsoft.UI.Xaml.Controls;
-#else
+    using Microsoft.UI.Xaml.Controls;   
+#else       
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 #endif
@@ -30,6 +30,9 @@ namespace Caliburn.Micro
         protected Frame RootFrame { get; private set; }
 
 #if WinUI3
+        /// <summary>
+        /// The Window of the application.
+        /// </summary>
         public Window Window { get; private set; }
 #endif
 
@@ -153,7 +156,7 @@ namespace Caliburn.Micro
         /// <returns>A list of assemblies to inspect.</returns>
         protected virtual IEnumerable<Assembly> SelectAssemblies()
         {
-            return new[] {GetType().GetTypeInfo().Assembly};
+            return new[] { GetType().GetTypeInfo().Assembly };
         }
 
         /// <summary>
@@ -174,7 +177,7 @@ namespace Caliburn.Micro
         /// <returns>The located services.</returns>
         protected virtual IEnumerable<object> GetAllInstances(Type service)
         {
-            return new[] {System.Activator.CreateInstance(service)};
+            return new[] { System.Activator.CreateInstance(service) };
         }
 
         /// <summary>
@@ -218,12 +221,17 @@ namespace Caliburn.Micro
         }
 
 #if WinUI3
+        /// <summary>
+        /// Creates a new window for the application.
+        /// </summary>
         protected virtual Window CreateWindow()
         {
             return new Window();
         }
 
-
+        /// <summary>
+        /// Initializes a new window for the application.
+        /// </summary>
         public void InitializeWindow()
         {
             if(Window == null)

@@ -106,7 +106,7 @@ namespace Caliburn.Micro.Core.Tests
             {
                 if (deactivationDelay.HasValue)
                 {
-                    await Task.Delay(deactivationDelay.Value, cancellationToken).ConfigureAwait(false);
+                    await Task.Delay(deactivationDelay.Value, cancellationToken);
                 }
 
                 await base.OnActivateAsync(cancellationToken);
@@ -120,7 +120,7 @@ namespace Caliburn.Micro.Core.Tests
             {
                 if (deactivationDelay.HasValue)
                 {
-                    await Task.Delay(deactivationDelay.Value, cancellationToken).ConfigureAwait(false);
+                    await Task.Delay(deactivationDelay.Value, cancellationToken);
                 }
 
                 await base.OnActivatedAsync(cancellationToken);
